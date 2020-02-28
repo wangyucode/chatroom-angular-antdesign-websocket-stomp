@@ -23,7 +23,7 @@ nz-header {
 }
 
 nz-content {
-  background-image: url("/assets/bg.png");
+  background-image: url("../../../assets/bg.png");
   overflow-y: scroll;
 }
 
@@ -34,12 +34,12 @@ nz-card {
   padding: 8px;
 }
 
-nz-card.my{
+nz-card.my {
   margin-left: auto;
   background-color: rgb(14, 169, 55);
 }
 
-nz-card.system{
+nz-card.system {
   background-color: rgb(116, 219, 255);
 }
 

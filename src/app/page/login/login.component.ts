@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StompService } from '../../service/stomp.service';
-import { RxStompState } from '@stomp/rx-stomp';
+import { RxStompState, RxStompConfig } from '@stomp/rx-stomp';
 import { Message } from '@stomp/stompjs';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
@@ -27,18 +27,17 @@ export class LoginComponent implements OnInit {
       this.error = '请输入邀请码！';
       return;
     }
-    this.stompService.rxStomp.configure({
+
+    const config: RxStompConfig = {
       brokerURL: environment.stompEndpoint,
       connectHeaders: {
         code: this.code
-      },
-      heartbeatIncoming: 0,
-      heartbeatOutgoing: 20000,
-      reconnectDelay: 200,
-      debug: environment.production ? undefined : (msg: string): void => {
-        console.log(new Date(), msg);
       }
-    });
+    };
+    if (!environment.production) {
+      config.debug = console.log;
+    }
+    this.stompService.rxStomp.configure(config);
     this.stompService.rxStomp.connected$.subscribe(this.connectCallBack);
     this.stompService.rxStomp.activate();
   }
