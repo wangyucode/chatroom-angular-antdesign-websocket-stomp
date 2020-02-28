@@ -1,0 +1,38 @@
+<nz-layout>
+  <nz-header>
+    <div class="header-row">
+      <span class="head-text">邀请码：{{code}}</span>
+      <!--      <button nz-button nzType="primary" nzSize="small" class="btn-copy" (click)="copy()">复制</button>-->
+    </div>
+    <div class="header-row">
+      <span class="head-text">在线人数：{{count}}</span>
+      <button nz-button nzType="danger" nzSize="small" class="btn-exit" (click)="exit()" style="float: right">退出
+      </button>
+    </div>
+  </nz-header>
+  <nz-content>
+    <nz-card *ngFor="let message of messages" [class.my]="message.user==user" [class.system]="message.user===-100">
+      <nz-comment *ngIf="message.type===0" nzAuthor="{{names[message.user]}}" nzDatetime="{{message.time}}">
+        <nz-avatar
+          nz-comment-avatar
+          nzIcon="user"
+          nzSrc="{{icons[message.user]}}"
+        ></nz-avatar>
+        <nz-comment-content>
+          {{message.content}}
+        </nz-comment-content>
+      </nz-comment>
+      <div *ngIf="message.type===100">系统：邀请码已变更为：{{message.content}}</div>
+      <div *ngIf="message.type===200">系统：{{names[message.content]}}加入了群聊</div>
+      <div *ngIf="message.type===201">系统：{{names[message.content]}}退出了群聊</div>
+    </nz-card>
+  </nz-content>
+  <nz-footer>
+    <nz-input-group nzSearch [nzAddOnAfter]="suffixButton">
+      <input type="text" nz-input [(ngModel)]="content" />
+    </nz-input-group>
+    <ng-template #suffixButton>
+      <button *ngIf="content" nz-button nzType="primary" nzSearch (click)="send()">发送</button>
+    </ng-template>
+  </nz-footer>
+</nz-layout>

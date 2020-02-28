@@ -7,8 +7,144 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <style>
+    body {
+      margin: 0;
+    }
+
+    #index-loading {
+      display: flex;
+      justify-content: center;
+      margin-top: 40vh;
+    }
+
+    .cube {
+      width: 50px;
+      height: 50px;
+      transform-style: preserve-3d;
+      animation: rotate 6s linear 0s infinite normal none;
+    }
+
+    @keyframes rotate {
+      from {
+        transform: rotateX(0deg) rotateY(0deg);
+      }
+
+      to {
+        transform: rotateX(360deg) rotateY(360deg);
+      }
+    }
+
+    .cube div {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      opacity: 0.8;
+    }
+
+    .front {
+      background-color: #f77;
+      animation: zoom-f 400ms ease-in-out 0s infinite alternate none;
+    }
+
+    .back {
+      background-color: #7f7;
+      animation: zoom-b 400ms ease-in-out 0s infinite alternate none;
+    }
+
+    .left {
+      background-color: #77f;
+      animation: zoom-l 400ms ease-in-out 0s infinite alternate none;
+    }
+
+    .right {
+      background-color: #7ff;
+      animation: zoom-r 400ms ease-in-out 0s infinite alternate none;
+    }
+
+    .top {
+      background-color: #f7f;
+      animation: zoom-t 400ms ease-in-out 0s infinite alternate none;
+    }
+
+    .bottom {
+      background-color: #ff7;
+      animation: zoom-bt 400ms ease-in-out 0s infinite alternate none;
+    }
+
+    @keyframes zoom-f {
+      from {
+        transform: translateZ(-25px) rotateY(180deg)
+      }
+
+      to {
+        transform: translateZ(-75px) rotateY(180deg) scale(1.5);
+      }
+    }
+
+    @keyframes zoom-b {
+      from {
+        transform: translateZ(25px);
+      }
+
+      to {
+        transform: translateZ(75px) scale(1.5);
+      }
+    }
+
+    @keyframes zoom-l {
+      from {
+        transform: translateX(-25px) rotateY(-90deg);
+      }
+
+      to {
+        transform: translateX(-75px) rotateY(-90deg) scale(1.5);
+      }
+    }
+
+    @keyframes zoom-r {
+      from {
+        transform: translateX(25px) rotateY(90deg);
+      }
+
+      to {
+        transform: translateX(75px) rotateY(90deg) scale(1.5);
+      }
+    }
+
+    @keyframes zoom-t {
+      from {
+        transform: translateY(25px) rotateX(-90deg);
+      }
+
+      to {
+        transform: translateY(75px) rotateX(-90deg) scale(1.5);
+      }
+    }
+
+    @keyframes zoom-bt {
+      from {
+        transform: translateY(-25px) rotateX(90deg);
+      }
+
+      to {
+        transform: translateY(-75px) rotateX(90deg) scale(1.5);
+      }
+    }
+  </style>
 </head>
 <body>
-  <app-root></app-root>
+<app-root>
+  <div id="index-loading">
+    <div class="cube">
+      <div class="top"></div>
+      <div class="bottom"></div>
+      <div class="front"></div>
+      <div class="back"></div>
+      <div class="left"></div>
+      <div class="right"></div>
+    </div>
+  </div>
+</app-root>
 </body>
 </html>

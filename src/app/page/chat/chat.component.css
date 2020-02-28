@@ -1,0 +1,53 @@
+nz-layout {
+  height: 100%;
+}
+
+nz-header {
+  padding: 0 24px;
+  box-shadow: 0 2px 3px 3px #888888;
+  height: 58px;
+  z-index: 5;
+}
+
+.header-row {
+  line-height: initial;
+}
+
+.header-row:first-child {
+  margin-top: 12px;
+}
+
+.head-text {
+  color: #eeeeee;
+  margin-right: 12px;
+}
+
+nz-content {
+  background-image: url("/assets/bg.png");
+  overflow-y: scroll;
+}
+
+nz-card {
+  max-width: 80%;
+  border-radius: 8px;
+  margin: 12px;
+  padding: 8px;
+}
+
+nz-card.my{
+  margin-left: auto;
+  background-color: rgb(14, 169, 55);
+}
+
+nz-card.system{
+  background-color: rgb(116, 219, 255);
+}
+
+
+nz-footer {
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  height: 48px;
+  box-shadow: 0 -2px 3px 3px #888888;
+}

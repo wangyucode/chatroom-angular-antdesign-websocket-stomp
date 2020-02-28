@@ -1,0 +1,19 @@
+.login-container {
+  background-image: url('/assets/bg.png');;
+  display: flex;
+  height: 100%;
+}
+
+.form-container {
+  margin: auto auto;
+  width: 60%;
+}
+
+nz-alert {
+  margin-top: 24px;
+}
+
+button {
+  margin-top: 24px;
+  width: 100%;
+}
