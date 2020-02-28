@@ -36,6 +36,9 @@ export class ChatComponent implements OnInit {
   count: number;
   code: string;
   user: number;
+  gen: number;
+  remove: number;
+  welcomeVisible = true;
 
   constructor(private stompService: StompService, private router: Router) {
   }
@@ -46,6 +49,8 @@ export class ChatComponent implements OnInit {
       this.count = this.stompService.initData.users.length;
       this.code = this.stompService.initData.code;
       this.user = this.stompService.initData.user;
+      this.gen = this.stompService.initData.gen;
+      this.remove = this.stompService.initData.remove;
       this.stompService.rxStomp.watch('/topic/all').subscribe(this.messageCallBack);
       this.stompService.rxStomp.watch('/topic/system').subscribe(this.messageCallBack);
     } else {

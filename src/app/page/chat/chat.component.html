@@ -36,3 +36,16 @@
     </ng-template>
   </nz-footer>
 </nz-layout>
+
+<nz-modal [(nzVisible)]="welcomeVisible"
+          nzTitle="欢迎来到匿名聊天室！"
+          (nzOnOk)="welcomeVisible=false"
+          [nzCancelText]="null"
+          nzWidth="80%"
+          nzCloseIcon="{{null}}">
+  <p>所有人都不是真名，你是：<strong>{{names[user]}}</strong></p>
+  <p>请务必<strong>不用在乎</strong>自己的言论！</p>
+  <p>每隔 {{gen}} 分钟邀请码会刷新！</p>
+  <p>所有消息都<strong>不会保存</strong>到服务器！</p>
+  <p>历史消息只保留约 {{remove}} 分钟！</p>
+</nz-modal>
