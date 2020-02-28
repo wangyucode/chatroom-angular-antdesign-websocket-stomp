@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.stompService.rxStomp.configure({
-      brokerURL: 'ws://127.0.0.1:8080/stomp',
+      brokerURL: environment.stompEndpoint,
       connectHeaders: {
         code: this.code
       },

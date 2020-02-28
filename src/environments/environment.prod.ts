@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  stompEndpoint: 'wss://wycode.cn/web/stomp'
 };
