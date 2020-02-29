@@ -9,7 +9,6 @@ import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import { ChatComponent } from './page/chat/chat.component';
 import { LoginComponent } from './page/login/login.component';
-import { PageNotFoundComponent } from './component/page-not-found/page-not-found.component';
 import { AppRoutingModule } from './app-routing.module';
 
 registerLocaleData(zh);
@@ -17,7 +16,6 @@ registerLocaleData(zh);
 @NgModule({
   declarations: [
     AppComponent,
-    PageNotFoundComponent,
     LoginComponent,
     ChatComponent
   ],
