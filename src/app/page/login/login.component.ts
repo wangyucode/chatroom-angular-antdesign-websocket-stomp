@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { StompService } from '../../service/stomp.service';
-import { RxStompState, RxStompConfig } from '@stomp/rx-stomp';
+import { RxStompConfig, RxStompState } from '@stomp/rx-stomp';
 import { Message } from '@stomp/stompjs';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -11,15 +12,30 @@ import { environment } from '../../../environments/environment';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
+
 
   code: string;
   error: string;
+
+  connectSub: Subscription;
+  statusSub: Subscription;
 
   constructor(private stompService: StompService, private router: Router) {
   }
 
   ngOnInit() {
+    this.connectSub = this.stompService.rxStomp.connected$.subscribe(this.connectCallBack);
+  }
+
+  ngOnDestroy(): void {
+    console.log('ngOnDestroy');
+    if (this.connectSub) {
+      this.connectSub.unsubscribe();
+    }
+    if (this.statusSub) {
+      this.statusSub.unsubscribe();
+    }
   }
 
   join() {
@@ -29,7 +45,8 @@ export class LoginComponent implements OnInit {
     }
 
     const config: RxStompConfig = {
-      brokerURL: environment.stompEndpoint,
+      // brokerURL: environment.stompEndpoint,
+      brokerURL: 'wss://wycode.cn/web/stomp',
       connectHeaders: {
         code: this.code
       }
@@ -38,7 +55,6 @@ export class LoginComponent implements OnInit {
       config.debug = console.log;
     }
     this.stompService.rxStomp.configure(config);
-    this.stompService.rxStomp.connected$.subscribe(this.connectCallBack);
     this.stompService.rxStomp.activate();
   }
 
@@ -48,7 +64,7 @@ export class LoginComponent implements OnInit {
 
   connectCallBack = (state: RxStompState) => {
     if (state === RxStompState.OPEN) {
-      this.stompService.rxStomp.watch('/user/queue/status').subscribe(this.statusCallBack);
+      this.statusSub = this.stompService.rxStomp.watch('/user/queue/status').subscribe(this.statusCallBack);
       this.stompService.rxStomp.publish({ destination: '/app/status' });
     }
   };
@@ -57,6 +73,9 @@ export class LoginComponent implements OnInit {
     const result = JSON.parse(msg.body);
     if (result.error) {
       this.error = result.error;
+      if (this.statusSub) {
+        this.statusSub.unsubscribe();
+      }
       this.stompService.rxStomp.deactivate();
     } else {
       if (!environment.production) {

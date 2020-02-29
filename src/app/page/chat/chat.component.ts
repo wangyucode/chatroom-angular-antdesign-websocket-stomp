@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { StompService } from '../../service/stomp.service';
 import { Router } from '@angular/router';
 import { Message } from '@stomp/stompjs';
 import { environment } from '../../../environments/environment';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, OnDestroy {
 
   names = ['亚瑟',
     '狄仁杰',
@@ -40,7 +41,12 @@ export class ChatComponent implements OnInit {
   remove: number;
   welcomeVisible = true;
 
-  constructor(private stompService: StompService, private router: Router) {
+  contentDiv: HTMLElement;
+
+  allSub: Subscription;
+  systemSub: Subscription;
+
+  constructor(private stompService: StompService, private router: Router, private el: ElementRef) {
   }
 
   ngOnInit() {
@@ -51,10 +57,20 @@ export class ChatComponent implements OnInit {
       this.user = this.stompService.initData.user;
       this.gen = this.stompService.initData.gen;
       this.remove = this.stompService.initData.remove;
-      this.stompService.rxStomp.watch('/topic/all').subscribe(this.messageCallBack);
-      this.stompService.rxStomp.watch('/topic/system').subscribe(this.messageCallBack);
+      this.allSub = this.stompService.rxStomp.watch('/topic/all').subscribe(this.messageCallBack);
+      this.systemSub = this.stompService.rxStomp.watch('/topic/system').subscribe(this.messageCallBack);
     } else {
       this.router.navigate(['/']);
+    }
+    this.contentDiv = this.el.nativeElement.querySelector('#chat-content');
+  }
+
+  ngOnDestroy(): void {
+    if (this.allSub) {
+      this.allSub.unsubscribe();
+    }
+    if (this.systemSub) {
+      this.systemSub.unsubscribe();
     }
   }
 
@@ -89,5 +105,12 @@ export class ChatComponent implements OnInit {
         break;
     }
     this.messages.push(result.data);
+    this.scroll();
   };
+
+  scroll() {
+    setTimeout(() => {
+      this.contentDiv.scrollTop = this.contentDiv.scrollHeight;
+    }, 500);
+  }
 }

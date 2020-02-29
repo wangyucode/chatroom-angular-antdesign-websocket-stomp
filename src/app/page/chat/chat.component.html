@@ -10,7 +10,7 @@
       </button>
     </div>
   </nz-header>
-  <nz-content>
+  <nz-content id="chat-content">
     <nz-card *ngFor="let message of messages" [class.my]="message.user==user" [class.system]="message.user===-100">
       <nz-comment *ngIf="message.type===0" nzAuthor="{{names[message.user]}}" nzDatetime="{{message.time}}">
         <nz-avatar
@@ -39,7 +39,7 @@
 
 <nz-modal [(nzVisible)]="welcomeVisible"
           nzTitle="欢迎来到匿名聊天室！"
-          (nzOnOk)="welcomeVisible=false"
+          (nzOnOk)="welcomeVisible=false;scroll();"
           [nzCancelText]="null"
           nzWidth="80%"
           nzCloseIcon="{{null}}">
