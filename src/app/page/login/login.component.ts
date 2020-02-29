@@ -29,7 +29,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log('ngOnDestroy');
     if (this.connectSub) {
       this.connectSub.unsubscribe();
     }
@@ -45,8 +44,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     const config: RxStompConfig = {
-      // brokerURL: environment.stompEndpoint,
-      brokerURL: 'wss://wycode.cn/web/stomp',
+      brokerURL: environment.stompEndpoint,
       connectHeaders: {
         code: this.code
       }

@@ -1,0 +1,11 @@
+branches:
+  only:
+    - master
+language: node_js
+node_js:
+  - "10"
+script: npm run build:prod
+deploy:
+  skip_cleanup: true
+  provider: script
+  script: node deploy/sftp.js $SERVER_PASSWORD
