@@ -82,7 +82,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         console.log('statusCallBack', result.data);
       }
       this.stompService.initData = result.data;
-      this.router.navigate(['/chat']);
+      this.router.navigate(['/chat'], { replaceUrl: true });
     }
   };
 }

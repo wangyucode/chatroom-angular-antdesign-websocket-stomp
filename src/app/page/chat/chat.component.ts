@@ -51,7 +51,10 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   offline: NzModalRef;
 
-  constructor(private stompService: StompService, private router: Router, private el: ElementRef, private modalService: NzModalService) {
+  constructor(private stompService: StompService,
+              private router: Router,
+              private el: ElementRef,
+              private modalService: NzModalService) {
   }
 
   ngOnInit() {
@@ -106,7 +109,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   exit = () => {
     this.stompService.rxStomp.deactivate();
     this.stompService.initData = undefined;
-    this.router.navigate(['/']);
+    this.router.navigate(['/login'], { replaceUrl: true });
   };
 
   copy() {
