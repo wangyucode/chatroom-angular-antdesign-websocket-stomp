@@ -1,6 +1,6 @@
 <div nz-col class="login-container">
   <div class="form-container">
-    <input nz-input placeholder="邀请码" [(ngModel)]="code" (ngModelChange)="change()"/>
+    <input nz-input placeholder="邀请码" [(ngModel)]="code" (ngModelChange)="change()" (keydown.enter)="join()" />
     <nz-alert *ngIf="error" nzType="error" [nzMessage]="error"></nz-alert>
     <button nz-button nzType="primary" (click)="join()">加入</button>
   </div>

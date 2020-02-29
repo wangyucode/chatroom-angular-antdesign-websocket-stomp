@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       connectHeaders: {
         code: this.code
       },
-      reconnectDelay: 0
+      reconnectDelay: 1000
     };
     if (!environment.production) {
       config.debug = console.log;
