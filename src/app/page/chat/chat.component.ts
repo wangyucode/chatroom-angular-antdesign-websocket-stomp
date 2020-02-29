@@ -1,16 +1,18 @@
-import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { StompService } from '../../service/stomp.service';
 import { Router } from '@angular/router';
 import { Message } from '@stomp/stompjs';
+import { RxStompState } from '@stomp/rx-stomp';
 import { environment } from '../../../environments/environment';
 import { Subscription } from 'rxjs';
+import { NzModalService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
-export class ChatComponent implements OnInit, OnDestroy {
+export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
 
   names = ['亚瑟',
     '狄仁杰',
@@ -32,21 +34,22 @@ export class ChatComponent implements OnInit, OnDestroy {
     'https://game.gtimg.cn/images/yxzj/img201606/heroimg/511/511.jpg',
     'https://game.gtimg.cn/images/yxzj/img201606/heroimg/148/148.jpg',
     'https://game.gtimg.cn/images/yxzj/img201606/heroimg/170/170.jpg'];
-  content: string;
-  messages: any[];
-  count: number;
-  code: string;
-  user: number;
-  gen: number;
-  remove: number;
+  content = '';
+  messages = [];
+  count = 0;
+  code = '';
+  user = 0;
+  gen = 0;
+  remove = 0;
   welcomeVisible = true;
 
   contentDiv: HTMLElement;
 
   allSub: Subscription;
   systemSub: Subscription;
+  connectSub: Subscription;
 
-  constructor(private stompService: StompService, private router: Router, private el: ElementRef) {
+  constructor(private stompService: StompService, private router: Router, private el: ElementRef, private modalService: NzModalService) {
   }
 
   ngOnInit() {
@@ -59,9 +62,16 @@ export class ChatComponent implements OnInit, OnDestroy {
       this.remove = this.stompService.initData.remove;
       this.allSub = this.stompService.rxStomp.watch('/topic/all').subscribe(this.messageCallBack);
       this.systemSub = this.stompService.rxStomp.watch('/topic/system').subscribe(this.messageCallBack);
+      this.connectSub = this.stompService.rxStomp.connectionState$.subscribe(this.connectCallBack);
+      if (!environment.production) {
+        this.stompService.rxStomp.stompClient.onWebSocketClose = console.log;
+      }
     } else {
       this.router.navigate(['/']);
     }
+  }
+
+  ngAfterViewInit() {
     this.contentDiv = this.el.nativeElement.querySelector('#chat-content');
   }
 
@@ -72,7 +82,21 @@ export class ChatComponent implements OnInit, OnDestroy {
     if (this.systemSub) {
       this.systemSub.unsubscribe();
     }
+    if (this.connectSub) {
+      this.connectSub.unsubscribe();
+    }
   }
+
+  connectCallBack = (state: RxStompState) => {
+
+    if (state === RxStompState.CLOSED) {
+      this.modalService.error({
+        nzTitle: '您已掉线！',
+        nzContent: '请重新进入房间...',
+        nzOnOk: this.exit
+      });
+    }
+  };
 
   exit() {
     this.stompService.rxStomp.deactivate();
@@ -96,6 +120,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     switch (result.data.type) {
       case 100:
         this.code = result.data.content;
+        this.stompService.rxStomp.configure({ connectHeaders: { code: this.code } });
         break;
       case 200:
         this.count += 1;

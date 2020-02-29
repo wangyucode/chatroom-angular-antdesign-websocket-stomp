@@ -45,9 +45,11 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     const config: RxStompConfig = {
       brokerURL: environment.stompEndpoint,
+      // brokerURL: 'wss://wycode.cn/web/stomp',
       connectHeaders: {
         code: this.code
-      }
+      },
+      reconnectDelay: 0
     };
     if (!environment.production) {
       config.debug = console.log;
