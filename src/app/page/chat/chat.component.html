@@ -5,7 +5,7 @@
       <!--      <button nz-button nzType="primary" nzSize="small" class="btn-copy" (click)="copy()">复制</button>-->
     </div>
     <div class="header-row">
-      <span class="head-text">在线人数：{{count}}</span>
+      <span class="head-text">{{offline ? '已掉线...' : '在线人数：' + count}}</span>
       <button nz-button nzType="danger" nzSize="small" class="btn-exit" (click)="exit()" style="float: right">退出
       </button>
     </div>

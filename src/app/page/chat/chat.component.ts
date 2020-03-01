@@ -145,6 +145,7 @@ export class ChatComponent implements OnInit, OnDestroy {
           }
       });
     } else if (state === RxStompState.OPEN && this.offline) {
+      this.offline = false;
       this.statusSub = this.stompService.rxStomp.watch('/user/queue/status').subscribe(this.statusCallBack);
       this.stompService.rxStomp.publish({ destination: '/app/status' });
     }

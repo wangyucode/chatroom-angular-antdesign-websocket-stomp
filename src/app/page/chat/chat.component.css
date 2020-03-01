@@ -36,11 +36,11 @@ nz-card {
 
 nz-card.my {
   margin-left: auto;
-  background-color: rgb(0, 175, 48);
+  background-color: #efdbff;
 }
 
 nz-card.system {
-  background-color: rgb(116, 219, 255);
+  background-color: #b5f5ec;
 }
 
 
@@ -49,5 +49,6 @@ nz-footer {
   align-items: center;
   padding: 0 24px;
   height: 48px;
+  background-color: #efdbff;
   box-shadow: 0 -2px 3px 3px #888888;
 }

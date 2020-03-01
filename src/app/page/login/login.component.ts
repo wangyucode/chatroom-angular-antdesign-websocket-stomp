@@ -7,6 +7,9 @@ import { environment } from '../../../environments/environment';
 import { Subscription } from 'rxjs';
 
 
+const noOp = () => {
+};
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -49,11 +52,9 @@ export class LoginComponent implements OnInit, OnDestroy {
       connectHeaders: {
         code: this.code
       },
-      reconnectDelay: 1000
+      debug: environment.production ? noOp : console.log,
+      reconnectDelay: 3000
     };
-    if (!environment.production) {
-      config.debug = console.log;
-    }
     this.stompService.rxStomp.configure(config);
     this.stompService.rxStomp.activate();
   }
