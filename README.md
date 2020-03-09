@@ -1,5 +1,17 @@
 # ChatAngular
 
+Sometimes we are not safe, even if we just chat with each other.
+
+![login](screencapture/login.png)
+![chat](screencapture/chat.png)
+
+## Backend
+
+The backend project is developed with SpringBoot
+Code repository is here <https://github.com/wangyucode/chatroom-spring-websocket-stomp>
+
+## Basic Info
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.1.
 
 ## Development server
@@ -25,3 +37,6 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+
+[]: https://github.com/angular/angular-cli

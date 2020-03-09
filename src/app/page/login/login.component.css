@@ -9,11 +9,18 @@
   width: 60%;
 }
 
-nz-alert {
-  margin-top: 24px;
+h1{
+  text-align: center;
+}
+
+nz-alert{
+  margin-bottom: 24px;
+}
+
+input {
+  margin-bottom: 24px;
 }
 
 button {
-  margin-top: 24px;
   width: 100%;
 }

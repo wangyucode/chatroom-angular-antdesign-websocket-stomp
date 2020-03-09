@@ -1,5 +1,7 @@
 <div nz-col class="login-container">
   <div class="form-container">
+    <h1>谝</h1>
+    <nz-alert nzType="info" nzMessage="邀请码会定期刷新，获取最新的邀请码，请联系管理员！"></nz-alert>
     <input nz-input placeholder="邀请码" [(ngModel)]="code" (ngModelChange)="change()" (keydown.enter)="join()" />
     <nz-alert *ngIf="error" nzType="error" [nzMessage]="error"></nz-alert>
     <button nz-button nzType="primary" (click)="join()">加入</button>
