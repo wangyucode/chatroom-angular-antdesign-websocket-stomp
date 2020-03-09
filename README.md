@@ -8,6 +8,7 @@ Sometimes we are not safe, even if we just chat with each other.
 ## Backend
 
 The backend project is developed with SpringBoot
+
 Code repository is here <https://github.com/wangyucode/chatroom-spring-websocket-stomp>
 
 ## Basic Info
