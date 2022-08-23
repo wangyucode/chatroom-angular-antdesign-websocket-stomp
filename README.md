@@ -1,5 +1,7 @@
 # ChatAngular
 
+**This repository no longer maintained. I am starting to create a new project on wechat miniApp and nextJS web app.**
+
 Sometimes we are not safe, even if we just chat with each other.
 
 ![login](screencapture/login.png)
